@@ -43,7 +43,8 @@ The screenshots and click metadata are used solely for the purpose of generating
 We do not share any data with third parties.
 
 **4. Permissions:**
-*   `activeTab` / `<all_urls>`: Required to capture screenshots of the pages you are recording.
+*   `activeTab`: Required to capture screenshots of the active tab when you click "Start Recording".
+*   `scripting`: Required to inject the visual click indicator (red circle) into the page.
 *   `storage`: Required to temporarily save your steps before export.
 *   `downloads`: Required to save the final `.zip` file to your computer.
 
@@ -51,9 +52,11 @@ We do not share any data with third parties.
 
 ## Single Purpose Justification (for Chrome Web Store Review)
 
-**Purpose:**
+**Purpose:**  
 The "Scriber" extension allows users to create automated step-by-step documentation guides by recording their interactions on web pages.
 
 **Justification for Permissions:**
-*   **`<all_urls>` / `videoCapture` / `activeTab`**: The core functionality of the extension is to capture screenshots of *any* web page the user chooses to record. The user expects the extension to work continuously across navigation to different URLs during a single recording session (e.g., a tutorial that spans multiple pages of an application). Restricting this would break the multi-page recording workflow.
+*   **`activeTab`**: The extension captures screenshots of the currently active tab when the user explicitly clicks "Start Recording". This permission is only used on tabs where the user has activated the extension.
 *   **`scripting`**: Needed to inject the visual "click indicator" (red circle) into the page to show the user where they clicked in the final screenshot.
+*   **`storage`**: Temporarily stores captured steps in local browser storage until the user exports them.
+*   **`downloads`**: Allows the user to download their documentation package as a `.zip` file.

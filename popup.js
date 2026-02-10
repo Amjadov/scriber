@@ -31,8 +31,27 @@ startBtn.onclick = async () => {
     await chrome.storage.local.set({ isRecording: true, capturedSteps: [] });
 
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    chrome.tabs.sendMessage(tab.id, { action: "START_RECORDING" });
-    chrome.runtime.sendMessage({ action: "START_RECORDING" }); // Tell background to reset
+
+    // Inject content script and CSS programmatically (activeTab permission)
+    try {
+        await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: ['content.js']
+        });
+
+        await chrome.scripting.insertCSS({
+            target: { tabId: tab.id },
+            files: ['content.css']
+        });
+
+        // Now send the start message
+        chrome.tabs.sendMessage(tab.id, { action: "START_RECORDING" });
+        chrome.runtime.sendMessage({ action: "START_RECORDING" }); // Tell background to reset
+    } catch (error) {
+        console.error("Failed to inject content script:", error);
+        alert("Failed to start recording. Please refresh the page and try again.");
+        return;
+    }
 
     updateUI(true);
 };
