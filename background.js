@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         // Capture screenshot immediately on mousedown
         chrome.tabs.captureVisibleTab(null, { format: "png" }).then(screenshot => {
             preCapturedScreenshot = screenshot;
-            console.log(`${APP_NAME}: Pre-capture stored`);
+            // console.log(`${APP_NAME}: Pre-capture stored`);
         }).catch(err => {
             console.error("Pre-capture failed:", err);
         });
@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             handleCapture(preCapturedScreenshot, request.data, sender.tab.id);
             preCapturedScreenshot = null; // Clear after use
         } else {
-            console.log(`${APP_NAME}: No pre-captured screenshot available`);
+            // console.log(`${APP_NAME}: No pre-captured screenshot available`);
         }
     }
 
@@ -43,7 +43,7 @@ async function handleCapture(screenshot, elementData, tabId) {
 
         steps.push(step);
         chrome.storage.local.set({ capturedSteps: steps });
-        console.log(`${APP_NAME}: Step saved -`, step.description);
+        // console.log(`${APP_NAME}: Step saved -`, step.description);
     } catch (error) {
         console.error("Capture processing failed:", error);
     }
