@@ -1,4 +1,4 @@
-.scribe-click-circle {
+.scriber-click-circle {
   position: fixed;
   width: 40px;
   height: 40px;
@@ -7,10 +7,10 @@
   pointer-events: none;
   z-index: 1000000;
   transform: translate(-50%, -50%) scale(0);
-  animation: scribe-pulse 1s ease-out forwards;
+  animation: scriber-pulse 1s ease-out forwards;
 }
 
-@keyframes scribe-pulse {
+@keyframes scriber-pulse {
   0% {
     transform: translate(-50%, -50%) scale(0);
     opacity: 1;

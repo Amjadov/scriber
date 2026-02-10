@@ -1,15 +1,16 @@
 let isRecording = false;
+const APP_NAME = chrome.runtime.getManifest().name;
 
 // Listen for messages from popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "START_RECORDING") {
     isRecording = true;
-    console.log("Scribe Clone v1.7: Recording started");
+    console.log(`${APP_NAME}: Recording started`);
     // Start continuous pre-capture
     startPreCapture();
   } else if (request.action === "STOP_RECORDING") {
     isRecording = false;
-    console.log("Scribe Clone v1.7: Recording stopped");
+    console.log(`${APP_NAME}: Recording stopped`);
     stopPreCapture();
   }
 });
@@ -37,14 +38,14 @@ function startPreCapture() {
 
   // Also capture immediately
   chrome.runtime.sendMessage({ action: "PRE_CAPTURE" });
-  console.log("Scribe Clone v1.7: Continuous pre-capture started");
+  console.log(`${APP_NAME}: Continuous pre-capture started`);
 }
 
 function stopPreCapture() {
   if (preCaptureInterval) {
     clearInterval(preCaptureInterval);
     preCaptureInterval = null;
-    console.log("Scribe Clone v1.7: Continuous pre-capture stopped");
+    console.log(`${APP_NAME}: Continuous pre-capture stopped`);
   }
 }
 
@@ -56,7 +57,7 @@ document.addEventListener("click", (event) => {
   const { clientX, clientY } = event;
   const element = event.target;
 
-  console.log("Scribe Clone v1.7: Click detected, using latest pre-captured screenshot");
+  console.log(`${APP_NAME}: Click detected, using latest pre-captured screenshot`);
 
   // Visual feedback
   drawClickCircle(clientX, clientY);
@@ -81,7 +82,7 @@ document.addEventListener("click", (event) => {
 
 function drawClickCircle(x, y) {
   const circle = document.createElement("div");
-  circle.className = "scribe-click-circle";
+  circle.className = "scriber-click-circle";
   circle.style.left = `${x}px`;
   circle.style.top = `${y}px`;
   document.body.appendChild(circle);

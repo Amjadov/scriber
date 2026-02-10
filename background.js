@@ -1,12 +1,13 @@
 let steps = [];
 let preCapturedScreenshot = null;
+const APP_NAME = chrome.runtime.getManifest().name;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "PRE_CAPTURE") {
         // Capture screenshot immediately on mousedown
         chrome.tabs.captureVisibleTab(null, { format: "png" }).then(screenshot => {
             preCapturedScreenshot = screenshot;
-            console.log("Scribe Clone v1.5: Pre-capture stored");
+            console.log(`${APP_NAME}: Pre-capture stored`);
         }).catch(err => {
             console.error("Pre-capture failed:", err);
         });
@@ -18,7 +19,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             handleCapture(preCapturedScreenshot, request.data, sender.tab.id);
             preCapturedScreenshot = null; // Clear after use
         } else {
-            console.warn("Scribe Clone v1.5: No pre-captured screenshot available");
+            console.log(`${APP_NAME}: No pre-captured screenshot available`);
         }
     }
 
@@ -42,7 +43,7 @@ async function handleCapture(screenshot, elementData, tabId) {
 
         steps.push(step);
         chrome.storage.local.set({ capturedSteps: steps });
-        console.log("Scribe Clone v1.6: Step saved -", step.description);
+        console.log(`${APP_NAME}: Step saved -`, step.description);
     } catch (error) {
         console.error("Capture processing failed:", error);
     }

@@ -3,6 +3,12 @@ const stopBtn = document.getElementById('stopBtn');
 const exportBtn = document.getElementById('exportBtn');
 const statusDot = document.getElementById('statusDot');
 const stepsCount = document.getElementById('stepsCount');
+const appTitle = document.getElementById('appTitle');
+
+const manifest = chrome.runtime.getManifest();
+const APP_NAME = manifest.name;
+const APP_VERSION = manifest.version;
+appTitle.innerText = `${APP_NAME} v${APP_VERSION}`;
 
 let isRecording = false;
 
@@ -97,7 +103,7 @@ async function generateVitePressExport(steps) {
 
     chrome.downloads.download({
         url: url,
-        filename: 'scribe-export.zip'
+        filename: `${APP_NAME.toLowerCase()}-export.zip`
     });
 }
 

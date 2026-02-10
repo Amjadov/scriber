@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Scribe Clone v1.7",
+  "name": "Scriber",
   "version": "1.7",
-  "description": "Capture screenshots on click and export for VitePress.",
+  "description": "Capture screenshots on click and export for Markdown file.",
   "permissions": [
     "activeTab",
     "scripting",
